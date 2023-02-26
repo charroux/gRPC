@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.carservice";
+option java_outer_classname = "CarServiceProto";
+option objc_class_prefix = "HLW";
+
+import "google/protobuf/empty.proto";
+
+package carservice;
+
+service CarRentalService {
+
+  rpc GetCars (GetCarsRequest) returns (stream Car) {}
+
+  rpc RentCars(stream Car) returns (Invoice) {}
+
+  rpc BookingCars(stream Car) returns (stream Invoice) {}
+
+  rpc WaitForACar(GetCarsRequest) returns (Car) {}
+
+}
+
+message Car {
+  string plateNumber = 1;
+  string brand = 2;
+  uint32 price = 3;
+}
+
+message GetCarsRequest {}
+
+message Invoice {
+  uint32 price = 1;
+}
